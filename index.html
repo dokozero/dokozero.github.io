@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Index</title>
+
+  <style>
+    /* Reduce all site size on smaller device as user tends to be closer to them */
+    @media (max-width: calc(515em / 16)) {
+      html {
+        font-size: calc(0.9em / 1.6);
+      }
+    }
+    @media (min-width: calc(515em / 16)) and (max-width: calc(1280em / 16)) {
+      html {
+        font-size: calc(0.9em / 1.6);
+      }
+    }
+    @media (min-width: calc(1280em / 16)) and (max-width: calc(1640em / 16)) {
+      html {
+        font-size: calc(0.95em / 1.6);
+      }
+    }
+    @media (min-width: calc(1640em / 16)) {
+      html {
+        font-size: calc(1em / 1.6);
+      }
+    }
+
+    body {
+      display: grid;
+      justify-content: center;
+      
+      padding: 6rem 1.6rem;
+
+      background-color: oklch(20% 0 0);
+
+      font-family: sans-serif;
+    }
+
+    h1 {
+      margin-bottom: 3rem;
+
+      font-size: 3.3rem;
+      color: oklch(95% 0 0);
+    }
+
+    a {
+      font-size: 2rem;
+      line-height: 1.5;
+      color: oklch(75% 0.14 265.17);
+    }
+  </style>
+</head>
+
+  <body>
+
+    <h1>dokozero.github.io</h1>
+
+    <a href="/oklch-css-relative-chroma-demo/">OkLCH CSS relative chroma demo</a>
+
+  </body>
+
+</html>
