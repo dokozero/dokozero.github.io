@@ -6,6 +6,13 @@
 
     <title>OkLCH gamut clipping tests</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       html {
         font-size: calc(1em / 1.6);
@@ -53,6 +60,10 @@
         font-size: 1.8rem;
         line-height: 1.5;
         color: oklch(20% 0 0);
+      }
+
+      b {
+        font-weight: 600;
       }
 
       .c-color-swatches-container {
@@ -138,15 +149,16 @@
       </p>
 
       <p>
-        The problem is that the resulting color will have a lightness and hue shift, more or less important depending on the
-        chroma value, which is a bummer since it defeat the OkLCH uniform advantage.
+        The problem is that the resulting color <b>will have a lightness and hue shift,</b> more or less important depending on
+        the chroma value, which is a bummer since it defeats the OkLCH uniform advantage.
       </p>
 
-      <p class="u-mb-13">
+      <p>
         That means that by reading the color code, e.g. oklch(80% 0.37 20), you might think that you'll get a color with a
-        lightness of 80%, where in fact it'll be 65% in that case. A better approach is to reduce only the chroma until the color
-        is in the targeted gamut.
+        lightness of 80%, <b>where in fact it'll be 65% in that case.</b>
       </p>
+
+      <p class="u-mb-13">A better approach is to reduce only the chroma until the color is in the targeted gamut:</p>
 
       <div class="c-color-swatches-container">
         <div>
