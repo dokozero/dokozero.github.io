@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>OkLCH gamut clipping tests</title>
+
+    <style>
+      html {
+        font-size: calc(1em / 1.6);
+      }
+
+      body {
+        margin: 0;
+        padding: 0 1.2rem;
+        font-family: 'Inter', sans-serif;
+        display: grid;
+      }
+
+      main {
+        max-width: 72rem;
+        margin: auto;
+        padding: 6rem 0;
+      }
+
+      @media (max-width: calc(670em / 16)) {
+        main {
+          padding: 2rem 0;
+        }
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 1.2rem;
+
+        font-size: 3.8rem;
+        color: oklch(10% 0 0);
+      }
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 1.2rem;
+
+        font-size: 2.2rem;
+        color: oklch(15% 0 0);
+      }
+
+      p {
+        margin-top: 0;
+        margin-bottom: 1.2rem;
+
+        font-size: 1.8rem;
+        line-height: 1.5;
+        color: oklch(20% 0 0);
+      }
+
+      .c-color-swatches-container {
+        display: grid;
+        gap: 5.6rem;
+      }
+
+      .c-color-swatches-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(36rem, auto));
+        grid-row-gap: 2rem;
+      }
+
+      .c-color-swatch {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .c-color-swatch__color {
+        height: 10rem;
+      }
+
+      .c-color-swatch__color--1-chroma-clamp {
+        background-color: oklch(50% 0.15 240);
+      }
+      .c-color-swatch__color--1-browser-clamp {
+        background-color: oklch(50% 0.3 240);
+      }
+
+      .c-color-swatch__color--2-chroma-clamp {
+        background-color: oklch(30% 0.115 150);
+      }
+      .c-color-swatch__color--2-browser-clamp {
+        background-color: oklch(30% 0.34 150);
+      }
+
+      .c-color-swatch__color--3-chroma-clamp {
+        background-color: oklch(78% 0.202 64);
+      }
+      .c-color-swatch__color--3-browser-clamp {
+        background-color: oklch(78% 0.27 64);
+      }
+
+      .c-color-swatch__color--4-chroma-clamp {
+        background-color: oklch(80% 0.147 20);
+      }
+      .c-color-swatch__color--4-browser-clamp {
+        background-color: oklch(80% 0.37 20);
+      }
+
+      .c-color-swatch__text-container {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .c-color-swatch__text-container p {
+        margin: 0;
+        line-height: 1;
+      }
+
+      .u-mb-13 {
+        margin-bottom: 5.2rem;
+      }
+
+      .u-text-green {
+        color: oklch(50% 0.2047 145);
+      }
+
+      .u-text-red {
+        color: oklch(50% 0.2217 20);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>OkLCH gamut clipping tests</h1>
+
+      <p>Tests with two methods of out of gamut colors back into P3.</p>
+
+      <p>
+        When using an oklch() color with a chroma out of the screen gamut, at time of writing, most browsers will choose the
+        closest color by clipping the individual RGB value of the color.
+      </p>
+
+      <p>
+        The problem is that the resulting color will have a lightness and hue shift, more or less important depending on the
+        chroma value, which is a bummer since it defeat the OkLCH uniform advantage.
+      </p>
+
+      <p class="u-mb-13">
+        That means that by reading the color code, e.g. oklch(80% 0.37 20), you might think that you'll get a color with a
+        lightness of 80%, where in fact it'll be 65% in that case. A better approach is to reduce only the chroma until the color
+        is in the targeted gamut.
+      </p>
+
+      <div class="c-color-swatches-container">
+        <div>
+          <h2>Requested: oklch(50% 0.3 240)</h2>
+
+          <div class="c-color-swatches-row">
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--1-chroma-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Chroma only clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-green">50%</span> 0.15 <span class="u-text-green">240</span>)</p>
+              </div>
+            </div>
+
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--1-browser-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Browser clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-red">53.51%</span> 0.25 <span class="u-text-red">257.84</span>)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Requested: oklch(30% 0.34 150)</h2>
+
+          <div class="c-color-swatches-row">
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--2-chroma-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Chroma only clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-green">30%</span> 0.115 <span class="u-text-green">150</span>)</p>
+              </div>
+            </div>
+
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--2-browser-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Browser clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-red">34.71%</span> 0.15 <span class="u-text-red">145.64</span>)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Requested: oklch(78% 0.27 64)</h2>
+
+          <div class="c-color-swatches-row">
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--3-chroma-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Chroma only clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-green">78%</span> 0.202 <span class="u-text-green">64</span>)</p>
+              </div>
+            </div>
+
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--3-browser-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Browser clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-red">75.71%</span> 0.213 <span class="u-text-red">55.47</span>)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Requested: oklch(80% 0.37 20)</h2>
+
+          <div class="c-color-swatches-row">
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--4-chroma-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Chroma only clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-green">80%</span> 0.147 <span class="u-text-green">20</span>)</p>
+              </div>
+            </div>
+
+            <div class="c-color-swatch">
+              <div class="c-color-swatch__color c-color-swatch__color--4-browser-clamp"></div>
+              <div class="c-color-swatch__text-container">
+                <p><b>Browser clipping</b></p>
+                <p>Result color: oklch(<span class="u-text-red">65.71%</span> 0.2963 <span class="u-text-red">14.53</span>)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
