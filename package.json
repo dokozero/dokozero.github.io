@@ -1,0 +1,8 @@
+{
+  "name": "dokozero-github-io",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "prettier": "3.5.3"
+  }
+}
